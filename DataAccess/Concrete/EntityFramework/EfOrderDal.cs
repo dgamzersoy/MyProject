@@ -3,15 +3,12 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCategoryDal : EfEntityRepositoryBase<Category, ShoppingContext>, ICategoryDal
+   public class EfOrderDal: EfEntityRepositoryBase<Order, ShoppingContext>, IOrderDal
     {
-       
 
-      
     }
 }
