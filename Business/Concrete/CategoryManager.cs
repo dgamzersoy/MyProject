@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,13 +20,18 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
-        public List<Category> GetAll()
+        public IDataResult<List<Category>> GetAll()
         {
-            return _categoryDal.GetAll();        }
-
-        public Category GetById(int categoryId)
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Category>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(), Messages.CategoryListed);
+        }
+        
+        public IDataResult<List<Category>> GetAllByCategoryId(int categoryId)
         {
-            return _categoryDal.Get(c => c.CategoryId == categoryId);
+            return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(c => c.CategoryId == categoryId));
         }
     }
 }
